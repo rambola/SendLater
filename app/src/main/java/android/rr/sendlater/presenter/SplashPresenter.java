@@ -27,6 +27,7 @@ public class SplashPresenter {
 
     public void startMainActivity () {
         mContext.startActivity(new Intent(mSplashScreen, MainActivity.class));
+        mSplashScreen.finish();
     }
 
     Animation.AnimationListener animationListener = new Animation.AnimationListener() {

@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Send Later</string>
+    <string name="sent">Sent</string>
+    <string name="remaining">Remaining</string>
+    <string name="createNew">Create New</string>
+    <string name="saveMsg">Save Message</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="deleteConfirmation">Deleted messages will be not sent.</string>
+    <string name="ok">OK</string>
+    <string name="noMsgToShow">There are no saved messages. Create a new message to send later.</string>
 </resources>

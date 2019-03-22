@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:paddingBottom="7dp"
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="end"
+        android:focusable="false"
+        android:clickable="false"
+        android:focusableInTouchMode="false">
+
+        <LinearLayout
+            android:id="@+id/sentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="7dp"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            android:layout_alignEnd="@id/remainingLayout"
+            android:layout_above="@id/remainingLayout">
+
+            <TextView
+                android:id="@+id/sentTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                android:fontFamily="sans-serif"
+                android:padding="5dip"
+                android:text="Sent"
+                android:textColor="@color/colorPrimaryDark"
+                android:typeface="normal"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="end" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/sentFab"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:tint="@android:color/white"
+                app:fabSize="mini"
+                app:elevation="0dp"
+                app:srcCompat="@android:drawable/ic_menu_send" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/remainingLayout"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="7dp"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            android:layout_alignEnd="@id/createNewLayout"
+            android:layout_above="@id/createNewLayout">
+
+            <TextView
+                android:id="@+id/remainingTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                android:fontFamily="sans-serif"
+                android:padding="5dip"
+                android:text="Remaining"
+                android:textColor="@color/colorPrimaryDark"
+                android:typeface="normal"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="end" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/remainingFab"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:tint="@android:color/white"
+                app:fabSize="mini"
+                app:elevation="0dp"
+                app:srcCompat="@android:drawable/ic_popup_reminder" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/createNewLayout"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="13dp"
+            android:layout_marginEnd="7dp"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            android:layout_above="@id/baseFloatingActionButton"
+            android:layout_alignEnd="@id/baseFloatingActionButton">
+
+            <TextView
+                android:id="@+id/createNewTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                android:fontFamily="sans-serif"
+                android:padding="5dip"
+                android:text="Create New"
+                android:textColor="@color/colorPrimaryDark"
+                android:typeface="normal"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="end" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/createNewFab"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:tint="@android:color/white"
+                app:fabSize="mini"
+                app:elevation="0dp"
+                app:srcCompat="@android:drawable/ic_menu_share" />
+
+        </LinearLayout>
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/baseFloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@android:color/white"
+            app:fabSize="normal"
+            app:srcCompat="@android:drawable/ic_input_add"
+            app:elevation="0dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

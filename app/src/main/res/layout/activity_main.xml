@@ -1,18 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/baseFloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:tint="@android:color/white"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_main"
+        app:layout_constraintRight_toRightOf="@+id/activity_main" />
+
+    <LinearLayout
+        android:id="@+id/sentLayout"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginEnd="24dp"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/remainingLayout"
+        app:layout_constraintLeft_toLeftOf="@+id/remainingLayout"
+        app:layout_constraintRight_toRightOf="@+id/activity_main">
+
+        <TextView
+            android:id="@+id/sentTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:elevation="2dp"
+            android:fontFamily="sans-serif"
+            android:padding="5dip"
+            android:text="Sent"
+            android:textColor="@color/colorPrimaryDark"
+            android:typeface="normal"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:gravity="end" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/sentFab"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:tint="@android:color/white"
+            app:fabSize="mini"
+            app:elevation="0dp"
+            app:srcCompat="@android:drawable/ic_menu_send" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/remainingLayout"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginEnd="24dp"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/createNewLayout"
+        app:layout_constraintLeft_toLeftOf="@+id/createNewLayout"
+        app:layout_constraintRight_toRightOf="@+id/activity_main">
+
+        <TextView
+            android:id="@+id/remainingTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:elevation="2dp"
+            android:fontFamily="sans-serif"
+            android:padding="5dip"
+            android:text="Remaining"
+            android:textColor="@color/colorPrimaryDark"
+            android:typeface="normal"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:gravity="end" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/remainingFab"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:tint="@android:color/white"
+            app:fabSize="mini"
+            app:elevation="0dp"
+            app:srcCompat="@android:drawable/ic_popup_reminder" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/createNewLayout"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="24dp"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/baseFloatingActionButton"
+        app:layout_constraintRight_toRightOf="@+id/activity_main" >
+
+        <TextView
+            android:id="@+id/createNewTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:elevation="2dp"
+            android:fontFamily="sans-serif"
+            android:padding="5dip"
+            android:text="Create New"
+            android:textColor="@color/colorPrimaryDark"
+            android:typeface="normal"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:gravity="end" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/createNewFab"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:tint="@android:color/white"
+            app:fabSize="mini"
+            app:elevation="0dp"
+            app:srcCompat="@android:drawable/ic_menu_share" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -15,19 +15,25 @@ public class SplashScreen extends AppCompatActivity implements SplashPresenter.S
 
         TextView mSplashTV = findViewById(R.id.splashTV);
 
-        mSplashPresenter = new SplashPresenter (SplashScreen.this, getApplicationContext());
+        mSplashPresenter = new SplashPresenter (SplashScreen.this,
+                getApplicationContext());
         mSplashPresenter.startAnimation(mSplashTV);
     }
 
     @Override
     public void animationEnded() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             mSplashPresenter.startMainActivity();
         }
     }
-    
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.activity_fade_in, R.anim.activity_fade_out);
+    }
 }
