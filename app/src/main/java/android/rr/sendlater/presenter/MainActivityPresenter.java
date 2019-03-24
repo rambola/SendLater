@@ -5,13 +5,15 @@ import android.rr.sendlater.MainActivity;
 import android.rr.sendlater.R;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 
-public class MainActivityPresenter implements View.OnClickListener {
+public class MainActivityPresenter implements View.OnClickListener,
+        ViewPager.OnPageChangeListener {
     private MainActivity mMainActivity;
     private Context mContext;
     private boolean isFabMenuShown = false;
@@ -64,6 +66,31 @@ public class MainActivityPresenter implements View.OnClickListener {
                 mMainActivity.showThisFragment(2);
                 break;
         }
+    }
+
+    @Override
+    public void onPageScrolled(int i, float v, int i1) {
+
+    }
+
+    @Override
+    public void onPageSelected(int i) {
+        switch (i) {
+            case 0:
+                mMainActivity.changeActionBarTitle(mContext.getString(R.string.createNew));
+                break;
+            case 1:
+                mMainActivity.changeActionBarTitle(mContext.getString(R.string.remaining));
+                break;
+            case 2:
+                mMainActivity.changeActionBarTitle(mContext.getString(R.string.sent));
+                break;
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
+
     }
 
     public interface MainActivityView {

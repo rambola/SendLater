@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical">
+
+    <LinearLayout
+        android:id="@+id/selectedContactsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="11dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/enterMsgET"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="top|start"
+            android:singleLine="false"
+            android:scrollHorizontally="false"
+            android:hint="@string/enterUrMsg"
+            android:textSize="16sp"
+            android:minLines="6"
+            android:scrollbars="vertical"
+            android:inputType="textMultiLine"
+            android:maxLength="160" />
+        <TextView
+            android:id="@+id/enteredCharContTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="160/160"
+            android:gravity="bottom|start"
+            android:textSize="16sp"
+            android:padding="11dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="bottom|start"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:text="@string/chooseDate"
+                android:textSize="11sp"
+                android:textColor="@color/colorPrimaryDark"/>
+            <TextView
+                android:id="@+id/selectedDataTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:text="Chosen date: 16/12/2020"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimaryDark"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:text="@string/chooseTime"
+                android:textSize="11sp"
+                android:textColor="@color/colorPrimaryDark"/>
+            <TextView
+                android:id="@+id/selectedTimeTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:text="Chosen Time: 11:00 AM"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimaryDark"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="11dp">
+        <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:textColor="@color/colorPrimaryDark"/>
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/saveMsg"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:textColor="@color/colorPrimaryDark"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements
         mSentLayout = findViewById(R.id.sentLayout);
         mViewPager = findViewById(R.id.viewpager);
         mViewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
+        mViewPager.addOnPageChangeListener(mMainActivityPresenter);
     }
 
     public void changeActionBarTitle (String title) {

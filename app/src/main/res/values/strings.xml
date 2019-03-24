@@ -9,4 +9,10 @@
     <string name="deleteConfirmation">Deleted messages will be not sent.</string>
     <string name="ok">OK</string>
     <string name="noMsgToShow">There are no saved messages. Create a new message to send later.</string>
+    <string name="enterUrMsg">Enter your message</string>
+    <string name="chooseDate">Choose Date</string>
+    <string name="chooseTime">Choose Time</string>
+    <string name="chosenDate">Chosen Date: </string>
+    <string name="chosenTime">Chosen Time: </string>
+    <string name="errorMsgForTime">Please choose time greater than current time.</string>
 </resources>

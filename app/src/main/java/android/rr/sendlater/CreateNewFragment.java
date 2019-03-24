@@ -9,12 +9,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class CreateNewFragment extends Fragment implements
         CreateNewFragmentPresenter.CreateNewFragmentView {
     private CreateNewFragmentPresenter mCreateNewFragmentPresenter;
+
     private TextView mMsgTV;
+    private View mIncludeLayout;
+    private LinearLayout mSelectedContactsLayout;
+    private EditText mEnterMsgET;
+    private TextView mChosenDateTV;
+    private TextView mChosenTimeTV;
+    private TextView mCharCountTV;
+    private Button mCancelBtn;
+    private Button mSaveMsgBtn;
 
     public static CreateNewFragment newInstance() {
         return new CreateNewFragment();
@@ -37,16 +49,30 @@ public class CreateNewFragment extends Fragment implements
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mMsgTV = view.findViewById(R.id.msgTV);
-        mMsgTV.setOnClickListener(mCreateNewFragmentPresenter);
+        initViews(view);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ((MainActivity)getActivity()).changeActionBarTitle(getString(R.string.createNew));
     }
 
+    private void initViews (View view) {
+        mMsgTV = view.findViewById(R.id.msgTV);
+        mMsgTV.setOnClickListener(mCreateNewFragmentPresenter);
+
+        mIncludeLayout = view.findViewById(R.id.createNewIncludeLayout);
+        mSelectedContactsLayout = mIncludeLayout.findViewById(R.id.selectedContactsLayout);
+        mEnterMsgET = mIncludeLayout.findViewById(R.id.enterMsgET);
+        mCharCountTV = mIncludeLayout.findViewById(R.id.enteredCharContTV);
+        mChosenDateTV = mIncludeLayout.findViewById(R.id.selectedDataTV);
+        mChosenTimeTV = mIncludeLayout.findViewById(R.id.selectedTimeTV);
+        mCancelBtn = mIncludeLayout.findViewById(R.id.cancelBtn);
+        mSaveMsgBtn = mIncludeLayout.findViewById(R.id.saveBtn);
+        mCancelBtn.setOnClickListener(mCreateNewFragmentPresenter);
+        mSaveMsgBtn.setOnClickListener(mCreateNewFragmentPresenter);
+        mEnterMsgET.addTextChangedListener(mCreateNewFragmentPresenter);
+    }
 
     @Override
     public void showCreateNewLayout() {
