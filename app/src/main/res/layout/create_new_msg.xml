@@ -34,7 +34,7 @@
             android:id="@+id/enteredCharContTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="160/160"
+            android:text="0/160"
             android:gravity="bottom|start"
             android:textSize="16sp"
             android:padding="11dp"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
-                android:text="Chosen date: 16/12/2020"
+                android:text="@string/chosenDate"
                 android:textSize="16sp"
                 android:textColor="@color/colorPrimaryDark"/>
         </LinearLayout>
@@ -85,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
-                android:text="Chosen Time: 11:00 AM"
+                android:text="@string/chosenTime"
                 android:textSize="16sp"
                 android:textColor="@color/colorPrimaryDark"/>
         </LinearLayout>

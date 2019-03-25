@@ -14,5 +14,6 @@
     <string name="chooseTime">Choose Time</string>
     <string name="chosenDate">Chosen Date: </string>
     <string name="chosenTime">Chosen Time: </string>
-    <string name="errorMsgForTime">Please choose time greater than current time.</string>
+    <string name="errorMsgForTime">You chosen a Invalid Time. Please choose time greater than the current time.</string>
+    <string name="resettingTheViews">Clearing the data.</string>
 </resources>

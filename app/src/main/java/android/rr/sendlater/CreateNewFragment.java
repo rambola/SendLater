@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -25,8 +26,6 @@ public class CreateNewFragment extends Fragment implements
     private TextView mChosenDateTV;
     private TextView mChosenTimeTV;
     private TextView mCharCountTV;
-    private Button mCancelBtn;
-    private Button mSaveMsgBtn;
 
     public static CreateNewFragment newInstance() {
         return new CreateNewFragment();
@@ -50,6 +49,7 @@ public class CreateNewFragment extends Fragment implements
         super.onViewCreated(view, savedInstanceState);
 
         initViews(view);
+        showCreateNewLayout();
     }
 
     @Override
@@ -67,16 +67,60 @@ public class CreateNewFragment extends Fragment implements
         mCharCountTV = mIncludeLayout.findViewById(R.id.enteredCharContTV);
         mChosenDateTV = mIncludeLayout.findViewById(R.id.selectedDataTV);
         mChosenTimeTV = mIncludeLayout.findViewById(R.id.selectedTimeTV);
-        mCancelBtn = mIncludeLayout.findViewById(R.id.cancelBtn);
-        mSaveMsgBtn = mIncludeLayout.findViewById(R.id.saveBtn);
-        mCancelBtn.setOnClickListener(mCreateNewFragmentPresenter);
-        mSaveMsgBtn.setOnClickListener(mCreateNewFragmentPresenter);
+
+        mIncludeLayout.findViewById(R.id.cancelBtn).setOnClickListener(mCreateNewFragmentPresenter);
+        mIncludeLayout.findViewById(R.id.saveBtn).setOnClickListener(mCreateNewFragmentPresenter);
         mEnterMsgET.addTextChangedListener(mCreateNewFragmentPresenter);
+        mChosenDateTV.setOnClickListener(mCreateNewFragmentPresenter);
+        mChosenTimeTV.setOnClickListener(mCreateNewFragmentPresenter);
     }
 
     @Override
     public void showCreateNewLayout() {
         mMsgTV.setVisibility(View.GONE);
+        mIncludeLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void msgCharCount(int charCount) {
+        mCharCountTV.setText(charCount+"/160");
+    }
+
+    @Override
+    public void selectedDate(int dayOfMonth, int month, int year) {
+        month = month + 1;
+        String mnth;
+        if (month < 10)
+            mnth = "0"+month;
+        else
+            mnth = ""+month;
+
+        mChosenDateTV.setText(getString(R.string.chosenDate)+dayOfMonth+"/"+mnth+"/"+year);
+    }
+
+    @Override
+    public void selectedTime(int hourOfDay, int minute) {
+        mChosenTimeTV.setText(getString(R.string.chosenTime)+hourOfDay+":"+minute);
+    }
+
+    @Override
+    public void resetViews() {
+        mSelectedContactsLayout.removeAllViews();
+        mEnterMsgET.setText("");
+        mChosenDateTV.setText(getString(R.string.chosenDate));
+        mChosenTimeTV.setText(getString(R.string.chosenTime));
+        mCreateNewFragmentPresenter.showToast(getString(R.string.resettingTheViews));
+    }
+
+    @Override
+    public void hideKeyBoard() {
+        // Check if no view has focus:
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getActivity().
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
 }
