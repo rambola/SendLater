@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.rr.sendlater.model.SendMsgLaterModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SendLaterDB extends SQLiteOpenHelper {
@@ -17,6 +18,7 @@ public class SendLaterDB extends SQLiteOpenHelper {
 
     private final String TABLE_NAME = "SendLaterTable";
     private final String COLUMN_ID = "id";
+    private final String COLUMN_PHONE_NUMBERS = "PhoneNumbers";
     private final String COLUMN_MSG = "EnteredMessage";
     private final String COLUMN_DATE_TIME_IN_MILLS = "DateTimeInMills";
     private final String COLUMN_MSG_SENT = "MsgSent";
@@ -28,8 +30,9 @@ public class SendLaterDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table "+TABLE_NAME+" ("+COLUMN_ID+" integer primary key, "
-                +COLUMN_MSG+" text, "+COLUMN_DATE_TIME_IN_MILLS+" long, "+COLUMN_MSG_SENT+"text)");
+        db.execSQL("create table "+TABLE_NAME+" ("+COLUMN_ID+" integer primary key, "+
+                COLUMN_PHONE_NUMBERS+" text, "+COLUMN_MSG+" text, "+
+                COLUMN_DATE_TIME_IN_MILLS+" long, "+COLUMN_MSG_SENT+"text)");
     }
 
     @Override
@@ -38,9 +41,10 @@ public class SendLaterDB extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertMsgData (String enteredMsg, long dateTimeInMills, String isMsgSent) {
+    public void insertMsgData (String phoneNumbers, String enteredMsg, long dateTimeInMills, String isMsgSent) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_PHONE_NUMBERS, phoneNumbers);
         contentValues.put(COLUMN_MSG, enteredMsg);
         contentValues.put(COLUMN_DATE_TIME_IN_MILLS, dateTimeInMills);
         contentValues.put(COLUMN_MSG_SENT, isMsgSent);
@@ -50,7 +54,7 @@ public class SendLaterDB extends SQLiteOpenHelper {
     }
 
     public List<SendMsgLaterModel> getMsgsData (String filterType) {
-        List<SendMsgLaterModel> sendMsgLaterModels;
+        List<SendMsgLaterModel> sendMsgLaterModels = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         String whereArgs[] = {filterType};
 
@@ -60,10 +64,21 @@ public class SendLaterDB extends SQLiteOpenHelper {
         if (null != cursor) {
             cursor.moveToFirst();
             while(cursor.moveToNext()) {
-
+                sendMsgLaterModels.add(new SendMsgLaterModel(
+                        cursor.getString(cursor.getColumnIndex(COLUMN_PHONE_NUMBERS)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_MSG)),
+                        cursor.getLong(cursor.getColumnIndex(COLUMN_DATE_TIME_IN_MILLS)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_MSG_SENT))));
             }
         }
 
         return  sendMsgLaterModels;
     }
+
+    public void deleteMsg (long dateTimeInMills) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        String[] whereArgs = {Long.toString(dateTimeInMills)};
+        sqLiteDatabase.delete(TABLE_NAME, COLUMN_DATE_TIME_IN_MILLS, whereArgs);
+    }
+
 }

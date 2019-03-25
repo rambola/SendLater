@@ -12,8 +12,14 @@
     <string name="enterUrMsg">Enter your message</string>
     <string name="chooseDate">Choose Date</string>
     <string name="chooseTime">Choose Time</string>
-    <string name="chosenDate">Chosen Date: </string>
-    <string name="chosenTime">Chosen Time: </string>
+    <string name="chosenDate">Chosen Date: --</string>
+    <string name="chosenTime">Chosen Time: --</string>
+    <string name="chosenDateWithPlaceHolders">Chosen Date: %1$d/%2$s/%3$d</string>
+    <string name="chosenTimeWithPlaceHolders">Chosen Time: %1$d:%2$s</string>
     <string name="errorMsgForTime">You chosen a Invalid Time. Please choose time greater than the current time.</string>
     <string name="resettingTheViews">Clearing the data.</string>
+    <string name="charCount">%1$d/160</string>
+    <string name="selectContacts">Click here to Select Contact(s)</string>
+    <string name="or">Or</string>
+    <string name="enterNumber">You can enter only one phone number</string>
 </resources>

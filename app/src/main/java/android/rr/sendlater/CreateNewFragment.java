@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,9 +19,11 @@ public class CreateNewFragment extends Fragment implements
     private CreateNewFragmentPresenter mCreateNewFragmentPresenter;
 
     private TextView mMsgTV;
+    private TextView mOrTV;
     private View mIncludeLayout;
     private LinearLayout mSelectedContactsLayout;
     private EditText mEnterMsgET;
+    private EditText mEnterNumberET;
     private TextView mChosenDateTV;
     private TextView mChosenTimeTV;
     private TextView mCharCountTV;
@@ -62,8 +63,10 @@ public class CreateNewFragment extends Fragment implements
         mMsgTV.setOnClickListener(mCreateNewFragmentPresenter);
 
         mIncludeLayout = view.findViewById(R.id.createNewIncludeLayout);
+        mOrTV = mIncludeLayout.findViewById(R.id.selectContactOrOptionTV);
         mSelectedContactsLayout = mIncludeLayout.findViewById(R.id.selectedContactsLayout);
         mEnterMsgET = mIncludeLayout.findViewById(R.id.enterMsgET);
+        mEnterNumberET = mIncludeLayout.findViewById(R.id.enterNumberET);
         mCharCountTV = mIncludeLayout.findViewById(R.id.enteredCharContTV);
         mChosenDateTV = mIncludeLayout.findViewById(R.id.selectedDataTV);
         mChosenTimeTV = mIncludeLayout.findViewById(R.id.selectedTimeTV);
@@ -83,7 +86,7 @@ public class CreateNewFragment extends Fragment implements
 
     @Override
     public void msgCharCount(int charCount) {
-        mCharCountTV.setText(charCount+"/160");
+        mCharCountTV.setText(getString(R.string.charCount, charCount));
     }
 
     @Override
@@ -95,12 +98,18 @@ public class CreateNewFragment extends Fragment implements
         else
             mnth = ""+month;
 
-        mChosenDateTV.setText(getString(R.string.chosenDate)+dayOfMonth+"/"+mnth+"/"+year);
+        mChosenDateTV.setText(getString(R.string.chosenDateWithPlaceHolders,
+                dayOfMonth, mnth, year));
     }
 
     @Override
     public void selectedTime(int hourOfDay, int minute) {
-        mChosenTimeTV.setText(getString(R.string.chosenTime)+hourOfDay+":"+minute);
+        String min;
+        if (minute < 10)
+            min = "0"+minute;
+        else
+            min = ""+minute;
+        mChosenTimeTV.setText(getString(R.string.chosenTimeWithPlaceHolders, hourOfDay, min));
     }
 
     @Override

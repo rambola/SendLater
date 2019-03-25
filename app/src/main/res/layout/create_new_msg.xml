@@ -3,7 +3,36 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical">
+    android:layout_marginTop="22dp">
+
+    <TextView
+        android:id="@+id/selectContactsTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/selectContacts"
+        android:textSize="16sp"
+        android:layout_marginBottom="7dp"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <TextView
+        android:id="@+id/selectContactOrOptionTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/or"
+        android:textSize="18sp"
+        android:layout_marginBottom="7dp"
+        android:textColor="@color/colorAccent"/>
+
+    <EditText
+        android:id="@+id/enterNumberET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enterNumber"
+        android:inputType="number"
+        android:maxLength="10"
+        android:singleLine="true"
+        android:gravity="start|top"
+        android:layout_marginBottom="7dp"/>
 
     <LinearLayout
         android:id="@+id/selectedContactsLayout"
@@ -95,13 +124,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="11dp">
+        android:padding="11dp"
+        android:layout_marginTop="40dp">
         <Button
             android:id="@+id/cancelBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/cancel"
             android:textSize="16sp"
+            android:textAllCaps="false"
             android:layout_weight="1"
             android:textColor="@color/colorPrimaryDark"/>
 
@@ -111,6 +142,7 @@
             android:layout_height="wrap_content"
             android:text="@string/saveMsg"
             android:textSize="16sp"
+            android:textAllCaps="false"
             android:layout_weight="1"
             android:textColor="@color/colorPrimaryDark"/>
     </LinearLayout>
