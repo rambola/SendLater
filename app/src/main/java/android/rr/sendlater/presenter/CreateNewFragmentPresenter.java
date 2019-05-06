@@ -41,6 +41,10 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
             case R.id.selectedTimeTV:
                 showTimePickerDialog();
                 break;
+            case R.id.selectContactsTV:
+                //mCreateNewFragmentModel.openContactsApp(mCreateNewFragment.getActivity());
+                mCreateNewFragmentModel.selectMultipleContacts(mCreateNewFragment);
+                break;
         }
     }
 
@@ -117,4 +121,5 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
         void resetViews();
         void hideKeyBoard();
     }
+
 }

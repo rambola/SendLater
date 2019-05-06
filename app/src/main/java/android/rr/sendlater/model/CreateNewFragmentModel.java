@@ -1,11 +1,16 @@
 package android.rr.sendlater.model;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.rr.sendlater.CreateNewFragment;
+import android.rr.sendlater.MainActivity;
+import android.rr.sendlater.MultiContactPickerActivity;
 import android.rr.sendlater.presenter.CreateNewFragmentPresenter;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -32,6 +37,22 @@ public class CreateNewFragmentModel implements DatePickerDialog.OnDateSetListene
             mCreateNewFragmentPresenter.chosenTime(hourOfDay, minute);
         else
             mCreateNewFragmentPresenter.selectedInvalidTime();
+    }
+
+    public void openContactsApp(Context context) {
+        Intent phonebookIntent = new Intent("intent.action.INTERACTION_TOPMENU");
+        phonebookIntent.putExtra("additional", "phone-multi");
+        phonebookIntent.putExtra("maxRecipientCount", 10);
+        phonebookIntent.putExtra("FromMMS", true);
+        ((Activity)context).startActivityForResult(phonebookIntent, 110);
+        /*Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        //intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+        ((Activity)context).startActivityForResult(intent, 110);*/
+    }
+
+    public void selectMultipleContacts (CreateNewFragment createNewFragment) {
+        createNewFragment.startActivityForResult(
+                new Intent("android.rr.sendlater.MULTI_CONTACTS_PICKER"), 110);
     }
 
     public interface CreateNewFragModel {
