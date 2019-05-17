@@ -6,8 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.rr.sendlater.CreateNewFragment;
-import android.rr.sendlater.MainActivity;
-import android.rr.sendlater.MultiContactPickerActivity;
 import android.rr.sendlater.presenter.CreateNewFragmentPresenter;
 import android.widget.DatePicker;
 import android.widget.TimePicker;

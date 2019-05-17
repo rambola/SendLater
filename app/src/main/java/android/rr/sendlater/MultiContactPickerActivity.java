@@ -1,22 +1,22 @@
 package android.rr.sendlater;
 
+import android.content.Intent;
 import android.rr.sendlater.adapter.MultiSelectionContactsListAdapter;
-import android.rr.sendlater.model.ContactsModel;
+import android.rr.sendlater.model.ContactsList;
 import android.rr.sendlater.presenter.MultiContactsPickerPresenter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MultiContactPickerActivity extends AppCompatActivity implements
         MultiContactsPickerPresenter.MultiContactsPickerView {
 
-    private RecyclerView mRecyclerView;
+    private TextView mLoadProgressTV;
     private MultiSelectionContactsListAdapter mMultiSelectionContactsListAdapter;
-    private List<ContactsModel> mContactsModelList = new ArrayList<>();
     private MultiContactsPickerPresenter mMultiContactsPickerPresenter;
 
     @Override
@@ -28,26 +28,32 @@ public class MultiContactPickerActivity extends AppCompatActivity implements
     }
 
     private void initViews () {
+        mLoadProgressTV = findViewById(R.id.txt_load_progress);
+        RecyclerView recyclerView = findViewById(R.id.multiContactsList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        mMultiSelectionContactsListAdapter = new MultiSelectionContactsListAdapter(
+                new ContactsList());
+        recyclerView.setAdapter(mMultiSelectionContactsListAdapter);
+
         mMultiContactsPickerPresenter = new MultiContactsPickerPresenter(
                 MultiContactPickerActivity.this);
-        mRecyclerView = findViewById(R.id.multiContactsList);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(MultiContactPickerActivity.this));
-        mMultiSelectionContactsListAdapter = new MultiSelectionContactsListAdapter(
-                MultiContactPickerActivity.this, mContactsModelList);
-        mRecyclerView.setAdapter(mMultiSelectionContactsListAdapter);
+        mMultiContactsPickerPresenter.loadContacts(mMultiSelectionContactsListAdapter,
+                mLoadProgressTV, "");
 
-        mMultiContactsPickerPresenter.loadContacts();
+        EditText searchET = findViewById(R.id.txt_filter);
+        searchET.addTextChangedListener(mMultiContactsPickerPresenter);
+
+        findViewById(R.id.doneBtn).setOnClickListener(mMultiContactsPickerPresenter);
     }
 
     @Override
-    public void onBackPressed() {
-        setResult(111, null);
-        super.onBackPressed();
+    public void sendSelectedContactsList(ContactsList contactsList) {
+        Intent intent = new Intent();
+        intent.putParcelableArrayListExtra("selectedContactsList",
+                contactsList.contactArrayList);
+        setResult(111, intent);
+        finish();
     }
 
-    @Override
-    public void updateTheAdapter(List<ContactsModel> contactsModelList) {
-        mContactsModelList = contactsModelList;
-        mMultiSelectionContactsListAdapter.notifyDataSetChanged();
-    }
 }

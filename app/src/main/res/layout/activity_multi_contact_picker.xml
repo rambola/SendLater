@@ -5,12 +5,37 @@
     android:layout_height="match_parent"
     tools:context=".MultiContactPickerActivity">
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_filter"
+        android:hint="search"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_load_progress"
+        android:text="Loading..."
+        android:layout_below="@+id/txt_filter"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/multiContactsList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fastScrollEnabled="true"
         android:scrollbarFadeDuration="7"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:layout_below="@+id/txt_load_progress"
+        android:layout_above="@+id/doneBtn"/>
+
+    <Button
+        android:id="@+id/doneBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

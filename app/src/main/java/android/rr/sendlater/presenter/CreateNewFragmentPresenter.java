@@ -2,18 +2,24 @@ package android.rr.sendlater.presenter;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.rr.sendlater.CreateNewFragment;
 import android.rr.sendlater.R;
 import android.rr.sendlater.model.CreateNewFragmentModel;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
 
 public class CreateNewFragmentPresenter implements View.OnClickListener, TextWatcher,
-        CreateNewFragmentModel.CreateNewFragModel {
+        CreateNewFragmentModel.CreateNewFragModel, View.OnTouchListener {
     private CreateNewFragment mCreateNewFragment;
     private CreateNewFragmentModel mCreateNewFragmentModel;
 
@@ -69,6 +75,26 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
         mTimePicker.show();
     }
 
+    public ShapeDrawable getTextViewBackgroundDrawable () {
+        // Initializing a ShapeDrawable
+        ShapeDrawable sd = new ShapeDrawable();
+
+        // Specify the shape of ShapeDrawable
+        sd.setShape(new RectShape());
+
+        // Specify the border color of shape
+        sd.getPaint().setColor(mCreateNewFragment.getActivity().getResources().
+                getColor(R.color.colorPrimaryDark));
+
+        // Set the border width
+        sd.getPaint().setStrokeWidth(7f);
+
+        // Specify the style is a Stroke
+        sd.getPaint().setStyle(Paint.Style.STROKE);
+
+        return  sd;
+    }
+
     private void resetTheFields () {
         mCreateNewFragment.resetViews();
     }
@@ -110,7 +136,39 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
 
     public void showToast (String toastMsg) {
         Toast.makeText(mCreateNewFragment.getActivity().getApplicationContext(), toastMsg,
-                Toast.LENGTH_LONG).show();
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+//        final int DRAWABLE_LEFT = 0;
+        //final int DRAWABLE_TOP = 1;
+        final int DRAWABLE_RIGHT = 2;
+        //final int DRAWABLE_BOTTOM = 3;
+
+        Log.e("raja", "clicked on delete img 1");
+        Log.e("raja", "clicked on delete img 1: event action up: "+(event.getAction() == MotionEvent.ACTION_UP));
+        Log.e("raja", "clicked on delete img 1: event action down: "+(event.getAction() == MotionEvent.ACTION_DOWN));
+        Log.e("raja", "clicked on delete img 1: getrawx(): event.getRawX(): "+event.getRawX());
+        Log.e("raja", "clicked on delete img 1: getrawx(): v.getRight: "+v.getRight());
+        Log.e("raja", "clicked on delete img 1: getrawx(): v.getLeft: "+v.getLeft());
+        Log.e("raja", "clicked on delete img 1: compounddrawabel right: "+(v.getRight() -((TextView) v).getCompoundDrawables()
+                [DRAWABLE_RIGHT].getBounds().width()));
+        //Log.e("raja", "clicked on delete img 1: compound drawable left: "+((TextView)v).getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width());
+
+        //right drawable
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            if(event.getRawX() >= (v.getRight() -((TextView) v).getCompoundDrawables()
+                    [DRAWABLE_RIGHT].getBounds().width())) {
+                Log.e("raja", "clicked on delete img");
+
+                return true;
+            }
+        }
+
+        //for left drawable
+        //if(event.getRawX() <= (editComment.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width()))
+        return false;
     }
 
     public interface CreateNewFragmentView {
