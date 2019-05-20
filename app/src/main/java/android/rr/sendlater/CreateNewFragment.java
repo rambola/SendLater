@@ -138,6 +138,27 @@ public class CreateNewFragment extends Fragment implements
     }
 
     @Override
+    public String getEnteredNumber() {
+        return mEnterNumberET.getText().toString().trim();
+    }
+
+    @Override
+    public String getEnteredMsg() {
+        return mEnterMsgET.getText().toString().trim();
+    }
+
+    @Override
+    public String getSelectedDate() {
+        return mChosenDateTV.getText().toString().trim();
+    }
+
+    @Override
+    public String getSelectedTime() {
+
+        return mChosenTimeTV.getText().toString().trim()+":00";
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 

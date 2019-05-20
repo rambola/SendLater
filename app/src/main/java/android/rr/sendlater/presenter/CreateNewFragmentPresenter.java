@@ -3,6 +3,7 @@ package android.rr.sendlater.presenter;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
@@ -11,7 +12,9 @@ import android.rr.sendlater.R;
 import android.rr.sendlater.model.ContactsModel;
 import android.rr.sendlater.model.CreateNewFragmentModel;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,15 +23,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CreateNewFragmentPresenter implements View.OnClickListener, TextWatcher,
         CreateNewFragmentModel.CreateNewFragModel, View.OnTouchListener {
     private CreateNewFragment mCreateNewFragment;
     private CreateNewFragmentModel mCreateNewFragmentModel;
     private List<TextView> mTextViewsList;
+    private List<ContactsModel> mContactsModels;
 
     public CreateNewFragmentPresenter (CreateNewFragment createNewFragment) {
         mCreateNewFragment = createNewFragment;
@@ -47,6 +55,7 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
                 break;
             case R.id.saveBtn:
                 hideKeyboard();
+                validateTheFields();
                 break;
             case R.id.selectedDataTV:
                 showDatePickerDialog();
@@ -102,7 +111,7 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
         return  sd;
     }
 
-    private void resetTheFields () {
+    public void resetTheFields () {
         mCreateNewFragment.resetViews();
     }
 
@@ -118,6 +127,88 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+    }
+
+    private void validateTheFields () {
+        if (null == mTextViewsList || (null != mTextViewsList && mTextViewsList.size() < 1)) {
+            boolean isNumberValid = validateTheEnteredNumber();
+            if (!isNumberValid) {
+                showToast(mCreateNewFragment.getActivity().getString(
+                        R.string.enterValidNumber));
+                return;
+            }
+        }
+
+        String date = mCreateNewFragment.getSelectedDate();
+        Log.e("raja", "date: "+date);
+        boolean isValidDateTime = validateSelectedDateTime(date);
+        if (!isValidDateTime) {
+            showToast(mCreateNewFragment.getActivity().getString(R.string.selectDate));
+            return;
+        }
+
+        String time = mCreateNewFragment.getSelectedTime();
+        Log.e("raja", "time: "+time);
+        isValidDateTime = validateSelectedDateTime(time);
+        if (!isValidDateTime) {
+            showToast(mCreateNewFragment.getActivity().getString(R.string.selectTime));
+            return;
+        }
+
+        saveTheMessageAndResetTheFields();
+    }
+
+    private boolean validateTheEnteredNumber () {
+        String enteredNumber = mCreateNewFragment.getEnteredNumber();
+        try {
+            if (TextUtils.isEmpty(enteredNumber) || enteredNumber.length() < 10)
+                return false;
+            Long.parseLong(enteredNumber);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateSelectedDateTime(String dateTime) {
+        return !(TextUtils.isEmpty(dateTime) || dateTime.contains("Chose"));
+    }
+
+    private void saveTheMessageAndResetTheFields() {
+        String enteredMsg = mCreateNewFragment.getEnteredMsg();
+        String contactNumbers = "";
+        if ((null == mTextViewsList || (null != mTextViewsList && mTextViewsList.size() < 1))
+                && validateTheEnteredNumber()) {
+            contactNumbers = mCreateNewFragment.getEnteredNumber();
+        }
+        else {
+            for (int i=0; i<mContactsModels.size(); i++) {
+                contactNumbers = contactNumbers + mContactsModels.get(i).mNumber+", ";
+            }
+        }
+
+        long dateTimeInMillis = convertDateTimeToMillis(mCreateNewFragment.getSelectedDate(),
+                mCreateNewFragment.getSelectedTime());
+
+        mCreateNewFragmentModel.saveTheMsgToDB(mCreateNewFragment.getActivity(),
+                enteredMsg, contactNumbers, dateTimeInMillis);
+    }
+
+    private long convertDateTimeToMillis (String dateString, String timeString) {
+        long dateTimeInMills = 0;
+        String dateTime = dateString +" " + timeString;
+        SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("dd/MM/yyyy HH:mm:ss",
+                Locale.getDefault());
+        try {
+            Date date = simpleDateFormat.parse(dateTime);
+            dateTimeInMills = date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return dateTimeInMills;
     }
 
     @Override
@@ -162,12 +253,18 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
                 R.string.errorMsgForTime));
     }
 
+    @Override
+    public void setAlarmToSavedMsg(String msg, String numbers, long dateTimeInMills) {
+
+    }
+
     public void showToast (String toastMsg) {
         Toast.makeText(mCreateNewFragment.getActivity().getApplicationContext(), toastMsg,
                 Toast.LENGTH_SHORT).show();
     }
 
     public void addSelectedContactsToLayout (ArrayList<ContactsModel> contactsModels) {
+        mContactsModels = contactsModels;
         int mSelectedContactsCount = contactsModels.size();
         mTextViewsList = new ArrayList<>();
 
@@ -234,6 +331,10 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
         void selectedContactsToLayout(List<TextView> textViewsList,
                                       LinearLayout.LayoutParams layoutParams);
         void deleteContact(int position, int textViewsListSize);
+        String getEnteredNumber();
+        String getEnteredMsg();
+        String getSelectedDate();
+        String getSelectedTime();
     }
 
 }

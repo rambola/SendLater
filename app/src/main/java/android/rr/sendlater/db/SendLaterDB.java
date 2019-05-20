@@ -14,6 +14,7 @@ public class SendLaterDB extends SQLiteOpenHelper {
     private static final String DB_NAME = "SendLater.db";
     private static final int DB_VERSION = 1;
 
+    private SendLaterDB mSendLaterDB;
     private final Context mContext;
 
     private final String TABLE_NAME = "SendLaterTable";
@@ -32,7 +33,7 @@ public class SendLaterDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table "+TABLE_NAME+" ("+COLUMN_ID+" integer primary key, "+
                 COLUMN_PHONE_NUMBERS+" text, "+COLUMN_MSG+" text, "+
-                COLUMN_DATE_TIME_IN_MILLS+" long, "+COLUMN_MSG_SENT+"text)");
+                COLUMN_DATE_TIME_IN_MILLS+" long, "+COLUMN_MSG_SENT+" text"+")");
     }
 
     @Override
@@ -41,7 +42,7 @@ public class SendLaterDB extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertMsgData (String phoneNumbers, String enteredMsg, long dateTimeInMills, String isMsgSent) {
+    public long insertMsgData (String phoneNumbers, String enteredMsg, long dateTimeInMills, String isMsgSent) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_PHONE_NUMBERS, phoneNumbers);
@@ -49,8 +50,9 @@ public class SendLaterDB extends SQLiteOpenHelper {
         contentValues.put(COLUMN_DATE_TIME_IN_MILLS, dateTimeInMills);
         contentValues.put(COLUMN_MSG_SENT, isMsgSent);
 
-        sqLiteDatabase.insertWithOnConflict(TABLE_NAME, null, contentValues,
+        return sqLiteDatabase.insertWithOnConflict(TABLE_NAME, null, contentValues,
                 SQLiteDatabase.CONFLICT_REPLACE);
+
     }
 
     public List<SendMsgLaterModel> getMsgsData (String filterType) {

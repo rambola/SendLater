@@ -6,6 +6,8 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.rr.sendlater.CreateNewFragment;
+import android.rr.sendlater.R;
+import android.rr.sendlater.db.SendLaterDB;
 import android.rr.sendlater.presenter.CreateNewFragmentPresenter;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -53,10 +55,23 @@ public class CreateNewFragmentModel implements DatePickerDialog.OnDateSetListene
                 new Intent("android.rr.sendlater.MULTI_CONTACTS_PICKER"), 110);
     }
 
+    public void saveTheMsgToDB (Context context, String msg, String numbers, long dateTimeInMills) {
+        long rowInsert = new SendLaterDB(context).insertMsgData(numbers, msg, dateTimeInMills,
+                String.valueOf(false));
+        if (rowInsert > 0) {
+            mCreateNewFragmentPresenter.showToast(context.getString(R.string.msgSaved));
+            mCreateNewFragmentPresenter.setAlarmToSavedMsg(msg, numbers, dateTimeInMills);
+        }
+        else
+            mCreateNewFragmentPresenter.showToast(context.getString(R.string.msgNotSaved));
+//        mCreateNewFragmentPresenter.resetTheFields();
+    }
+
     public interface CreateNewFragModel {
         void chosenDate (int dayOfMonth, int month, int year);
         void chosenTime (int hourOfDay, int minute);
         void selectedInvalidTime();
+        void setAlarmToSavedMsg(String msg, String numbers, long dateTimeInMills);
     }
 
 }

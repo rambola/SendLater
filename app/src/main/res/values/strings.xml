@@ -14,8 +14,8 @@
     <string name="chooseTime">Choose Time</string>
     <string name="chosenDate">Chosen Date: —</string>
     <string name="chosenTime">Chosen Time: —</string>
-    <string name="chosenDateWithPlaceHolders">Chosen Date: %1$d/%2$s/%3$d</string>
-    <string name="chosenTimeWithPlaceHolders">Chosen Time: %1$d:%2$s</string>
+    <string name="chosenDateWithPlaceHolders">%1$d/%2$s/%3$d</string>
+    <string name="chosenTimeWithPlaceHolders">%1$d:%2$s</string>
     <string name="errorMsgForTime">You chosen a Invalid Time. Please choose time greater than the current time.</string>
     <string name="resettingTheViews">Clearing the data.</string>
     <string name="charCount">%1$d/160</string>
@@ -25,4 +25,9 @@
     <string name="contactDetailsInList">%1$s | %2$s : %3$s</string>
     <string name="loadingContacts">Loading.... %1$d/%2$d</string>
     <string name="selectedContacts">%1$s : %2$s</string>
+    <string name="enterValidNumber">Please enter a valid 10 digit phone number</string>
+    <string name="selectDate">Please chose date</string>
+    <string name="selectTime">please chose time</string>
+    <string name="msgSaved">Message is saved to send later.</string>
+    <string name="msgNotSaved">Message is not saved. Try again.</string>
 </resources>
