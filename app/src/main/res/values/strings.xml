@@ -21,8 +21,8 @@
     <string name="charCount">%1$d/160</string>
     <string name="selectContacts">Click here to Select Contact(s)</string>
     <string name="or">Or</string>
-    <string name="enterNumber">You can enter only one phone number</string>
+    <string name="enterNumber">Enter 10 digit mobile number</string>
     <string name="contactDetailsInList">%1$s | %2$s : %3$s</string>
     <string name="loadingContacts">Loading.... %1$d/%2$d</string>
-    <string name="selectedContacts">%1$s : %2$s  </string>
+    <string name="selectedContacts">%1$s : %2$s</string>
 </resources>

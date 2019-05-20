@@ -58,4 +58,5 @@ public class CreateNewFragmentModel implements DatePickerDialog.OnDateSetListene
         void chosenTime (int hourOfDay, int minute);
         void selectedInvalidTime();
     }
+
 }
