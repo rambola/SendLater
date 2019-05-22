@@ -11,6 +11,7 @@ import android.rr.sendlater.CreateNewFragment;
 import android.rr.sendlater.R;
 import android.rr.sendlater.model.ContactsModel;
 import android.rr.sendlater.model.CreateNewFragmentModel;
+import android.rr.sendlater.utils.SendLaterUtils;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -255,7 +256,8 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
 
     @Override
     public void setAlarmToSavedMsg(String msg, String numbers, long dateTimeInMills) {
-
+        new SendLaterUtils(mCreateNewFragment.getActivity().getApplicationContext()).
+                setAlarmToMsg(msg, numbers, dateTimeInMills);
     }
 
     public void showToast (String toastMsg) {
