@@ -1,6 +1,8 @@
 package android.rr.sendlater.utils;
 
 public class SendLaterConstants {
+    public static final int REQUEST_PERMISSIONS_CALL_BACK = 000;
+    public static final int REQUEST_PERMISSION_SETTING = 0000;
     public static final String ALARM_ROW_ID = "rowId";
     public static final String ALARM_MSG = "msg";
     public static final String ALARM_NUMBERS = "numbers";
