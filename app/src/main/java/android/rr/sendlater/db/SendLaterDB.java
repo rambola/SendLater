@@ -55,18 +55,46 @@ public class SendLaterDB extends SQLiteOpenHelper {
 
     }
 
-    public List<SendMsgLaterModel> getMsgsData (String filterType) {
+    public List<SendMsgLaterModel> getMsgsDataFilterBySent (String filterType) {
         List<SendMsgLaterModel> sendMsgLaterModels = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        String whereArgs[] = {filterType};
 
-        Cursor cursor = sqLiteDatabase.query(TABLE_NAME, null, COLUMN_MSG_SENT, whereArgs,
-                null, null, COLUMN_DATE_TIME_IN_MILLS);
+        Cursor cursor = sqLiteDatabase.query(TABLE_NAME, null, COLUMN_MSG_SENT,
+                new String[] {filterType}, null, null, COLUMN_DATE_TIME_IN_MILLS);
 
         if (null != cursor) {
             cursor.moveToFirst();
             while(cursor.moveToNext()) {
                 sendMsgLaterModels.add(new SendMsgLaterModel(
+                        cursor.getString(cursor.getColumnIndex(COLUMN_ID)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_PHONE_NUMBERS)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_MSG)),
+                        cursor.getLong(cursor.getColumnIndex(COLUMN_DATE_TIME_IN_MILLS)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_MSG_SENT))));
+            }
+        }
+
+        return  sendMsgLaterModels;
+    }
+
+    public List<SendMsgLaterModel> getMsgsDataByIdOrMillis (String millisOrId, boolean byId) {
+        List<SendMsgLaterModel> sendMsgLaterModels = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        String whereArgs[] = {millisOrId};
+        Cursor cursor;
+
+        if (byId)
+            cursor = sqLiteDatabase.query(TABLE_NAME, null, COLUMN_ID,
+                whereArgs, null, null, null);
+        else
+            cursor = sqLiteDatabase.query(TABLE_NAME, null, COLUMN_DATE_TIME_IN_MILLS,
+                    whereArgs, null, null, null);
+
+        if (null != cursor) {
+            cursor.moveToFirst();
+            while(cursor.moveToNext()) {
+                sendMsgLaterModels.add(new SendMsgLaterModel(
+                        cursor.getString(cursor.getColumnIndex(COLUMN_ID)),
                         cursor.getString(cursor.getColumnIndex(COLUMN_PHONE_NUMBERS)),
                         cursor.getString(cursor.getColumnIndex(COLUMN_MSG)),
                         cursor.getLong(cursor.getColumnIndex(COLUMN_DATE_TIME_IN_MILLS)),

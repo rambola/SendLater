@@ -41,7 +41,8 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
 
     public CreateNewFragmentPresenter (CreateNewFragment createNewFragment) {
         mCreateNewFragment = createNewFragment;
-        mCreateNewFragmentModel = new CreateNewFragmentModel(CreateNewFragmentPresenter.this);
+        mCreateNewFragmentModel = new CreateNewFragmentModel(
+                CreateNewFragmentPresenter.this);
     }
 
     @Override
@@ -141,7 +142,6 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
         }
 
         String date = mCreateNewFragment.getSelectedDate();
-        Log.e("raja", "date: "+date);
         boolean isValidDateTime = validateSelectedDateTime(date);
         if (!isValidDateTime) {
             showToast(mCreateNewFragment.getActivity().getString(R.string.selectDate));
@@ -149,7 +149,6 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
         }
 
         String time = mCreateNewFragment.getSelectedTime();
-        Log.e("raja", "time: "+time);
         isValidDateTime = validateSelectedDateTime(time);
         if (!isValidDateTime) {
             showToast(mCreateNewFragment.getActivity().getString(R.string.selectTime));
@@ -255,9 +254,9 @@ public class CreateNewFragmentPresenter implements View.OnClickListener, TextWat
     }
 
     @Override
-    public void setAlarmToSavedMsg(String msg, String numbers, long dateTimeInMills) {
+    public void setAlarmToSavedMsg(String id, String msg, String numbers, long dateTimeInMills) {
         new SendLaterUtils(mCreateNewFragment.getActivity().getApplicationContext()).
-                setAlarmToMsg(msg, numbers, dateTimeInMills);
+                setAlarmToMsg(id, msg, numbers, dateTimeInMills);
     }
 
     public void showToast (String toastMsg) {

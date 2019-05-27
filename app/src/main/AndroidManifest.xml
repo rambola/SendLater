@@ -4,7 +4,9 @@
     package="android.rr.sendlater"
     tools:ignore="GoogleAppIndexingWarning">
 
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -39,7 +41,8 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".SendMsgService"/>
+        <service android:name=".SendMsgService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

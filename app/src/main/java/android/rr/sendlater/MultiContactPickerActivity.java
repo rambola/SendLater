@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.rr.sendlater.adapter.MultiSelectionContactsListAdapter;
 import android.rr.sendlater.model.ContactsList;
 import android.rr.sendlater.presenter.MultiContactsPickerPresenter;
+import android.rr.sendlater.utils.SendLaterConstants;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -50,9 +51,9 @@ public class MultiContactPickerActivity extends AppCompatActivity implements
     @Override
     public void sendSelectedContactsList(ContactsList contactsList) {
         Intent intent = new Intent();
-        intent.putParcelableArrayListExtra("selectedContactsList",
+        intent.putParcelableArrayListExtra(SendLaterConstants.MULTI_SELECT_CONTACTS_INTENT_KEY,
                 contactsList.contactArrayList);
-        setResult(111, intent);
+        setResult(SendLaterConstants.MULTI_SELECT_CONTACTS_RESULT_CODE, intent);
         finish();
     }
 

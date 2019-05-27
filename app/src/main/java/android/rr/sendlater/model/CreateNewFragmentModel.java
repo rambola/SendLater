@@ -9,10 +9,12 @@ import android.rr.sendlater.CreateNewFragment;
 import android.rr.sendlater.R;
 import android.rr.sendlater.db.SendLaterDB;
 import android.rr.sendlater.presenter.CreateNewFragmentPresenter;
+import android.rr.sendlater.utils.SendLaterConstants;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class CreateNewFragmentModel implements DatePickerDialog.OnDateSetListener,
         TimePickerDialog.OnTimeSetListener {
@@ -44,7 +46,8 @@ public class CreateNewFragmentModel implements DatePickerDialog.OnDateSetListene
         phonebookIntent.putExtra("additional", "phone-multi");
         phonebookIntent.putExtra("maxRecipientCount", 10);
         phonebookIntent.putExtra("FromMMS", true);
-        ((Activity)context).startActivityForResult(phonebookIntent, 110);
+        ((Activity)context).startActivityForResult(phonebookIntent,
+                SendLaterConstants.MULTI_SELECT_CONTACTS_REQUEST_CODE);
         /*Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
         //intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
         ((Activity)context).startActivityForResult(intent, 110);*/
@@ -52,15 +55,22 @@ public class CreateNewFragmentModel implements DatePickerDialog.OnDateSetListene
 
     public void selectMultipleContacts (CreateNewFragment createNewFragment) {
         createNewFragment.startActivityForResult(
-                new Intent("android.rr.sendlater.MULTI_CONTACTS_PICKER"), 110);
+                new Intent("android.rr.sendlater.MULTI_CONTACTS_PICKER"),
+                SendLaterConstants.MULTI_SELECT_CONTACTS_REQUEST_CODE);
     }
 
     public void saveTheMsgToDB (Context context, String msg, String numbers, long dateTimeInMills) {
         long rowInsert = new SendLaterDB(context).insertMsgData(numbers, msg, dateTimeInMills,
                 String.valueOf(false));
         if (rowInsert > 0) {
+            List<SendMsgLaterModel> sendMsgLaterModels = new SendLaterDB(context).
+                    getMsgsDataByIdOrMillis(String.valueOf(dateTimeInMills), false);
+
             mCreateNewFragmentPresenter.showToast(context.getString(R.string.msgSaved));
-            mCreateNewFragmentPresenter.setAlarmToSavedMsg(msg, numbers, dateTimeInMills);
+            mCreateNewFragmentPresenter.setAlarmToSavedMsg(sendMsgLaterModels.get(0).getId(),
+                    sendMsgLaterModels.get(0).getEnteredMsg(),
+                    sendMsgLaterModels.get(0).getPhoneNumbers(),
+                    sendMsgLaterModels.get(0).getDateTimeInMills());
         }
         else
             mCreateNewFragmentPresenter.showToast(context.getString(R.string.msgNotSaved));
@@ -71,7 +81,7 @@ public class CreateNewFragmentModel implements DatePickerDialog.OnDateSetListene
         void chosenDate (int dayOfMonth, int month, int year);
         void chosenTime (int hourOfDay, int minute);
         void selectedInvalidTime();
-        void setAlarmToSavedMsg(String msg, String numbers, long dateTimeInMills);
+        void setAlarmToSavedMsg(String id, String msg, String numbers, long dateTimeInMills);
     }
 
 }

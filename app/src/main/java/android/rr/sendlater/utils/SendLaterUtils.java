@@ -15,24 +15,35 @@ public class SendLaterUtils {
         mContext = context;
     }
 
-    public void setAlarmToMsg (String msg, String numbers, long dateTimeInMills) {
-        Log.e(TAG, "setAlarmToMsg, msg: "+msg+", numbers: "+numbers+
+    public void setAlarmToMsg (String id, String msg, String numbers, long dateTimeInMills) {
+        Log.e(TAG, "setAlarmToMsg, id: "+id+", msg: "+msg+", numbers: "+numbers+
                 ", dateTimeInMillis: "+dateTimeInMills );
         Intent intent = new Intent(mContext, SendMsgAlarmReceiver.class);
+        intent.putExtra(SendLaterConstants.ALARM_ROW_ID, id);
         intent.putExtra(SendLaterConstants.ALARM_MSG, msg);
         intent.putExtra(SendLaterConstants.ALARM_NUMBERS, numbers);
         intent.putExtra(SendLaterConstants.ALARM_DATE_TIME_IN_MILLIS, dateTimeInMills);
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext,
-                SendLaterConstants.ALARM_PENDING_INTENT_REQUEST_CODE, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                Integer.parseInt(id), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, dateTimeInMills, pendingIntent);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, dateTimeInMills,
+                pendingIntent);
     }
 
-    public void cancelAlarm () {
+    public void cancelAlarm (String id, String msg, String numbers, long dateTimeInMills) {
+        Log.e(TAG, "cancelAlarm, id: "+id+", msg: "+msg+", numbers: "+numbers+
+                ", dateTimeInMillis: "+dateTimeInMills );
+        Intent intent = new Intent(mContext, SendMsgAlarmReceiver.class);
+        intent.putExtra(SendLaterConstants.ALARM_ROW_ID, id);
+        intent.putExtra(SendLaterConstants.ALARM_MSG, msg);
+        intent.putExtra(SendLaterConstants.ALARM_NUMBERS, numbers);
+        intent.putExtra(SendLaterConstants.ALARM_DATE_TIME_IN_MILLIS, dateTimeInMills);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext,
+                Integer.parseInt(id), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
     }
 
 }

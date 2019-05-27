@@ -1,13 +1,15 @@
 package android.rr.sendlater.model;
 
 public class SendMsgLaterModel {
+    private String mId;
     private String mPhoneNumbers;
     private String mEnteredMsg;
     private long mDateTimeInMills;
     private String mIsMsgSent;
 
-    public SendMsgLaterModel (String phoneNumbers, String enteredMsg,
+    public SendMsgLaterModel (String id, String phoneNumbers, String enteredMsg,
                               long dateTimeInMills, String isMsgSent) {
+        mId = id;
         mPhoneNumbers = phoneNumbers;
         mEnteredMsg = enteredMsg;
         mDateTimeInMills = dateTimeInMills;
@@ -30,4 +32,5 @@ public class SendMsgLaterModel {
         return mIsMsgSent;
     }
 
+    public String getId () { return mId; }
 }

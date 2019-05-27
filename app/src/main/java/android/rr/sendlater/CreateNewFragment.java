@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.rr.sendlater.model.ContactsModel;
 import android.rr.sendlater.presenter.CreateNewFragmentPresenter;
+import android.rr.sendlater.utils.SendLaterConstants;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -47,14 +48,12 @@ public class CreateNewFragment extends Fragment implements
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_new, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initViews(view);
         showCreateNewLayout();
     }
@@ -163,9 +162,11 @@ public class CreateNewFragment extends Fragment implements
         super.onActivityResult(requestCode, resultCode, data);
 
         ArrayList<ContactsModel> contactsList = data.
-                getParcelableArrayListExtra("selectedContactsList");
+                getParcelableArrayListExtra(SendLaterConstants.MULTI_SELECT_CONTACTS_INTENT_KEY);
 
-        if (requestCode == 110 && resultCode == 111 && contactsList.size() > 0) {
+        if (requestCode == SendLaterConstants.MULTI_SELECT_CONTACTS_REQUEST_CODE &&
+                resultCode == SendLaterConstants.MULTI_SELECT_CONTACTS_RESULT_CODE &&
+                contactsList.size() > 0) {
             mSelectContactsTV.setVisibility(View.GONE);
             mOrTV.setVisibility(View.GONE);
             mEnterNumberET.setVisibility(View.GONE);
